@@ -2,14 +2,9 @@
 #include<ncurses.h>
 
 #include"helpers.h"
+#include"board_logic.h"
+#include"definitions.h"
 
-void draw_box(int start_y, int start_x, int size_y, int size_x) {
-    for (int i = start_y; i <= size_y; i++) {
-	for (int j = start_x; j <= size_x; j++){
-	    mvaddch(i, j, ACS_BLOCK);
-	}
-    }
-}
 
 int main(){
     initscr();
@@ -32,6 +27,9 @@ int main(){
       return 1;
     }
 
+    init_board(board_ptr, size_y, size_x); 
+    draw_board(board_ptr, start_y, start_x, size_y, size_x);
+
     int ch;
     int cur_y, cur_x;
 
@@ -40,22 +38,23 @@ int main(){
 	ch = getch();
 	switch (ch){
 	    case 'h':
-	    cur_x = proj_interval(--cur_x, size_x, 0);
+	    cur_x = proj_interval(--cur_x, size_x, start_x);
 	    break;
 	    case 'j':
-	    cur_y = proj_interval(++cur_y, size_y, 0);
+	    cur_y = proj_interval(++cur_y, size_y, start_y);
 	    break;
 	    case 'k':
-	    cur_y = proj_interval(--cur_y, size_y, 0);
+	    cur_y = proj_interval(--cur_y, size_y, start_y);
 	    break;
 	    case 'l':
-	    cur_x = proj_interval(++cur_x, size_x, 0);
+	    cur_x = proj_interval(++cur_x, size_x, start_x);
 	    break;
-	    case 'a':
-	    mvaddch(cur_y, cur_x, ACS_UARROW);
+	    case 'w':
+	    board_ptr[(cur_y - start_y)*size_x + (cur_x - start_x)] ^= IS_FLAGGED;
+	    draw_board(board_ptr, start_y, start_x, size_y, size_x); 
 	    break;
 	}
-	mvprintw(start_y + size_y, start_x + size_y, "Current position y: %d, x: %d\n", cur_y, cur_x);
+	mvprintw(start_y + size_y + 3, start_x + size_y + 3, "Current position y: %d, x: %d\n", cur_y, cur_x);
 	move(cur_y, cur_x);
 	refresh();
 	if (ch == 'q'){
