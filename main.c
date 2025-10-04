@@ -53,6 +53,11 @@ int main(){
 	    board_ptr[(cur_y - start_y)*size_x + (cur_x - start_x)] ^= IS_FLAGGED;
 	    draw_board(board_ptr, start_y, start_x, size_y, size_x); 
 	    break;
+	    case 'd':
+	    open_square(board_ptr, size_y, size_x, (cur_y - start_y), (cur_x - start_x));
+	    draw_board(board_ptr, start_y, start_x, size_y, size_x); 
+	    break;
+
 	}
 	mvprintw(start_y + size_y + 3, start_x + size_y + 3, "Current position y: %d, x: %d\n", cur_y, cur_x);
 	move(cur_y, cur_x);
