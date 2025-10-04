@@ -32,7 +32,7 @@ void init_board(int* board_ptr, int size_y, int size_x, int num_mines){
 	if (board_ptr[i] & IS_MINE){
 	    continue;
 	}
-	
+	//TODO: Stop counting wraparound for counting mines	
 	mine_count = 0;
 	
 	for (int offset_index = 0; offset_index < 8; ++offset_index){
@@ -54,7 +54,10 @@ void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x
 	for (int j = 0; j < size_x; j++){
 	    int board_val, ch_to_scr;	    
 	    board_val = board_ptr[i*size_x + j]; 
-	    if(board_val & IS_FLAGGED){
+	    if (board_val & IS_EXPLODED) {
+		ch_to_scr = ACS_NEQUAL;
+	    }
+	    else if(board_val & IS_FLAGGED){
 		ch_to_scr = ACS_UARROW;
 	    }
 	    else if (board_val & IS_CLOSED) {
@@ -72,12 +75,24 @@ void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x
     }
 }
 
+void fail_game(int *board_ptr, int size_y, int size_x){
+    for (int board_index = 0; board_index < size_y*size_x -1; ++board_index){
+	if (board_ptr[board_index] & IS_MINE) {
+	    board_ptr[board_index] += IS_EXPLODED;
+	}
+    }
+    //TODO Stop input and allow restarts
+}
+
 void open_square(int *board_ptr, int size_y, int size_x, int y_pos, int x_pos) {
   int square_val = board_ptr[y_pos * size_x + x_pos];
   if (square_val & IS_FLAGGED) {
     return;
   }
-
+    if (square_val & IS_MINE) {
+	fail_game(board_ptr, size_y, size_x);
+	return;
+    }
   if (square_val & IS_CLOSED) {
     board_ptr[y_pos * size_x + x_pos] ^= IS_CLOSED;
       if (0 == (square_val & 15)) {
@@ -92,3 +107,4 @@ void open_square(int *board_ptr, int size_y, int size_x, int y_pos, int x_pos) {
       }
   }
 }
+

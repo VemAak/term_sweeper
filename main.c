@@ -20,6 +20,7 @@ int main(){
     // standard large board TODO: add other/custom bord sizes
     size_y = 16;
     size_x = 30;
+    int num_mines = 99;
 
     int *board_ptr = calloc(size_y * size_x, sizeof(int));
     if (NULL == board_ptr) {
@@ -27,7 +28,7 @@ int main(){
       return 1;
     }
 
-    init_board(board_ptr, size_y, size_x); 
+    init_board(board_ptr, size_y, size_x, num_mines); 
     draw_board(board_ptr, start_y, start_x, size_y, size_x);
 
     int ch;
@@ -49,11 +50,11 @@ int main(){
 	    case 'l':
 	    cur_x = proj_interval(++cur_x, size_x, start_x);
 	    break;
-	    case 's':
+	    case 'd':
 	    board_ptr[(cur_y - start_y)*size_x + (cur_x - start_x)] ^= IS_FLAGGED;
 	    draw_board(board_ptr, start_y, start_x, size_y, size_x); 
 	    break;
-	    case 'd':
+	    case 's':
 	    open_square(board_ptr, size_y, size_x, (cur_y - start_y), (cur_x - start_x));
 	    draw_board(board_ptr, start_y, start_x, size_y, size_x); 
 	    break;
