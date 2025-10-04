@@ -20,7 +20,7 @@ int main(){
     // standard large board TODO: add other/custom bord sizes
     size_y = 16;
     size_x = 30;
-    int num_mines = 99;
+    int num_mines = 60;
 
     int *board_ptr = calloc(size_y * size_x, sizeof(int));
     if (NULL == board_ptr) {

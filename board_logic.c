@@ -32,11 +32,17 @@ void init_board(int* board_ptr, int size_y, int size_x, int num_mines){
 	if (board_ptr[i] & IS_MINE){
 	    continue;
 	}
-	//TODO: Stop counting wraparound for counting mines	
 	mine_count = 0;
 	
 	for (int offset_index = 0; offset_index < 8; ++offset_index){
-	    check_mine_index = proj_interval(i + offsets[offset_index], max_size_board - 1, 0);
+	    //Check if left hand side of board
+	    if (0 == (i % size_x) && (0 == offset_index || 3 == offset_index || 5 == offset_index)){
+		continue;
+	    }
+	    //Check if right hand side of board
+	    if (0 == ((i +1) % size_x) && (2 == offset_index || 4 == offset_index || 7 == offset_index)){
+		    continue;
+		}
 	    check_mine_index = i + offsets[offset_index];
 	    if (check_mine_index >= max_size_board | check_mine_index < 0){
 		continue;
