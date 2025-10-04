@@ -49,7 +49,7 @@ int main(){
 	    case 'l':
 	    cur_x = proj_interval(++cur_x, size_x, start_x);
 	    break;
-	    case 'w':
+	    case 's':
 	    board_ptr[(cur_y - start_y)*size_x + (cur_x - start_x)] ^= IS_FLAGGED;
 	    draw_board(board_ptr, start_y, start_x, size_y, size_x); 
 	    break;
