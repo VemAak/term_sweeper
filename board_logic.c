@@ -87,13 +87,7 @@ void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x
 		//ch_to_scr = 'a';
 		color_pair_id = num_mines + 1;
 	    }
-	    if ((1 == num_mines) || (8 == num_mines)) {
-		attron(A_BOLD);
-	    }
 	    mvaddch(i + start_y, j + start_x, ch_to_scr | COLOR_PAIR(color_pair_id));
-	    if ((1 == num_mines) || (8 == num_mines)) {
-		attroff(A_BOLD);
-	    }
 	}
     }
 }

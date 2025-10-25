@@ -1,6 +1,7 @@
 #binary
 term_sweeper
 
+
 # Prerequisites
 *.d
 
@@ -9,6 +10,7 @@ term_sweeper
 *.ko
 *.obj
 *.elf
+*.core
 
 # Linker output
 *.ilk
