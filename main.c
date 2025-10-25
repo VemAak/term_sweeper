@@ -3,6 +3,7 @@
 
 #include"helpers.h"
 #include"board_logic.h"
+#include"color.h"
 #include"definitions.h"
 
 
@@ -23,10 +24,9 @@ int main(){
 	printf("Your terminal does not support color!");
 	return 1;
     }
-    init_pair(1, COLOR_BLACK, COLOR_WHITE); // Closed square
-    init_pair(2, COLOR_BLACK, COLOR_WHITE); // Open square
-    init_pair(3, COLOR_MAGENTA, COLOR_WHITE); // Flagged square
-    init_pair(4, COLOR_RED, COLOR_WHITE); // Exploded square
+    else {
+	define_colors();
+    }
 
     // standard large board TODO: add other/custom bord sizes
     size_y = 16;

@@ -57,31 +57,43 @@ void init_board(int* board_ptr, int size_y, int size_x, int num_mines){
 
 void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x) {
     int color_pair_id;
+    int num_mines;
+    int board_val, ch_to_scr;	    
     for (int i = 0; i < size_y; i++) {
 	for (int j = 0; j < size_x; j++){
-	    int board_val, ch_to_scr;	    
+	    num_mines = 0;
 	    board_val = board_ptr[i*size_x + j]; 
 	    if (board_val & IS_EXPLODED) {
 		ch_to_scr = ACS_NEQUAL;
-		color_pair_id = 4;
+		color_pair_id = COLOR_EXPL;
 	    }
 	    else if(board_val & IS_FLAGGED){
 		ch_to_scr = ACS_UARROW;
-		color_pair_id = 3; 
+		color_pair_id = COLOR_FLAG; 
 	    }
 	    else if (board_val & IS_CLOSED) {
 		ch_to_scr = ACS_BLOCK;
-		color_pair_id = 1;
+		color_pair_id = COLOR_CLOSED;
 	    }
 	 //   else if (board_val & IS_MINE) {
 		//ch_to_scr = ACS_NEQUAL;
 	    //}
 	    else {
-		ch_to_scr = (board_val & 15) + 48; 
+		num_mines = board_val & 15;
+		ch_to_scr = (num_mines) + 48; 
+		if (0 == num_mines) {
+		    ch_to_scr = ' ';
+		}
 		//ch_to_scr = 'a';
-		color_pair_id = 2;
+		color_pair_id = num_mines + 1;
+	    }
+	    if ((1 == num_mines) || (8 == num_mines)) {
+		attron(A_BOLD);
 	    }
 	    mvaddch(i + start_y, j + start_x, ch_to_scr | COLOR_PAIR(color_pair_id));
+	    if ((1 == num_mines) || (8 == num_mines)) {
+		attroff(A_BOLD);
+	    }
 	}
     }
 }
