@@ -17,6 +17,17 @@ int main(){
     int size_y, size_x, max_size_y, max_size_x;
     getmaxyx(stdscr, max_size_y, max_size_x);
 
+    start_color();
+    if (!has_colors()) {
+	endwin();
+	printf("Your terminal does not support color!");
+	return 1;
+    }
+    init_pair(1, COLOR_BLACK, COLOR_WHITE); // Closed square
+    init_pair(2, COLOR_BLACK, COLOR_WHITE); // Open square
+    init_pair(3, COLOR_MAGENTA, COLOR_WHITE); // Flagged square
+    init_pair(4, COLOR_RED, COLOR_WHITE); // Exploded square
+
     // standard large board TODO: add other/custom bord sizes
     size_y = 16;
     size_x = 30;
@@ -51,7 +62,7 @@ int main(){
 	    cur_x = proj_interval(++cur_x, size_x, start_x);
 	    break;
 	    case 'd':
-	    board_ptr[(cur_y - start_y)*size_x + (cur_x - start_x)] ^= IS_FLAGGED;
+	    flag_square(board_ptr, size_y, size_x, (cur_y - start_y), (cur_x - start_x));
 	    draw_board(board_ptr, start_y, start_x, size_y, size_x); 
 	    break;
 	    case 's':

@@ -56,18 +56,22 @@ void init_board(int* board_ptr, int size_y, int size_x, int num_mines){
 }
 
 void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x) {
+    int color_pair_id;
     for (int i = 0; i < size_y; i++) {
 	for (int j = 0; j < size_x; j++){
 	    int board_val, ch_to_scr;	    
 	    board_val = board_ptr[i*size_x + j]; 
 	    if (board_val & IS_EXPLODED) {
 		ch_to_scr = ACS_NEQUAL;
+		color_pair_id = 4;
 	    }
 	    else if(board_val & IS_FLAGGED){
 		ch_to_scr = ACS_UARROW;
+		color_pair_id = 3; 
 	    }
 	    else if (board_val & IS_CLOSED) {
 		ch_to_scr = ACS_BLOCK;
+		color_pair_id = 1;
 	    }
 	 //   else if (board_val & IS_MINE) {
 		//ch_to_scr = ACS_NEQUAL;
@@ -75,8 +79,9 @@ void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x
 	    else {
 		ch_to_scr = (board_val & 15) + 48; 
 		//ch_to_scr = 'a';
+		color_pair_id = 2;
 	    }
-	    mvaddch(i + start_y, j + start_x, ch_to_scr);
+	    mvaddch(i + start_y, j + start_x, ch_to_scr | COLOR_PAIR(color_pair_id));
 	}
     }
 }
@@ -114,3 +119,12 @@ void open_square(int *board_ptr, int size_y, int size_x, int y_pos, int x_pos) {
   }
 }
 
+void flag_square(int *board_ptr, int size_y, int size_x, int y_pos, int x_pos) {
+    if (board_ptr[(y_pos)*size_x + (x_pos)] & IS_CLOSED) {
+	board_ptr[(y_pos)*size_x + (x_pos)] ^= IS_FLAGGED;
+    }
+    else {
+	return;
+    }
+
+}
