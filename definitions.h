@@ -5,8 +5,8 @@
     #define IS_CLOSED (1 << 6)
     #define IS_FLAGGED (1 << 7)
     
-    #define COLOR_CLOSED 11
-    #define COLOR_OPEN 12
-    #define COLOR_FLAG 13
-    #define COLOR_EXPL 14
+    #define COLOR_CLOSED 21
+    #define COLOR_OPEN 22
+    #define COLOR_FLAG 23
+    #define COLOR_EXPL 24
 #endif 

@@ -64,11 +64,13 @@ void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x
 	    num_mines = 0;
 	    board_val = board_ptr[i*size_x + j]; 
 	    if (board_val & IS_EXPLODED) {
-		ch_to_scr = ACS_NEQUAL;
+		// ch_to_scr = ACS_NEQUAL;
+		ch_to_scr = 'B';
 		color_pair_id = COLOR_EXPL;
 	    }
 	    else if(board_val & IS_FLAGGED){
-		ch_to_scr = ACS_UARROW;
+		//ch_to_scr = ACS_UARROW;
+		ch_to_scr = '@';
 		color_pair_id = COLOR_FLAG; 
 	    }
 	    else if (board_val & IS_CLOSED) {
@@ -86,6 +88,10 @@ void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x
 		}
 		//ch_to_scr = 'a';
 		color_pair_id = num_mines + 1;
+	    }
+	    if (0 == ((j + i % 2) % 2)) {
+		color_pair_id += 10;
+
 	    }
 	    mvaddch(i + start_y, j + start_x, ch_to_scr | COLOR_PAIR(color_pair_id));
 	}
