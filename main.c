@@ -1,4 +1,5 @@
 #include<stdlib.h>
+#include<string.h>
 #include<ncurses.h>
 
 #include"helpers.h"
@@ -7,35 +8,60 @@
 #include"definitions.h"
 
 
-int main(){
-    initscr();
-    noecho();
-    cbreak();
-
+int main(int argc, char* argv[]){
     // Shift for board
     int start_y = 1;
     int start_x = 1;
     int size_y, size_x, max_size_y, max_size_x;
+    int num_mines;
+
+    if (1 == argc) {
+	size_y = 16;
+	size_x = 30;
+	num_mines = 60;
+    }
+    else if (4 == argc) {
+	size_y = atoi(argv[1]);
+	size_x = atoi(argv[2]);
+	num_mines = atoi(argv[3]);
+	if (size_y < 1 || size_x < 1 ||  num_mines < 1) {
+	    printf("Arguments cannot be negative!\n");
+	    return 1;
+	    }
+	else if (num_mines > size_y*size_x) {
+	    printf("Number of mines greater than available squares!\n");
+	    return 1;
+	}
+    }
+    else {
+	printf("Incorrect selection of arguments. Correct is num_y, num_x, num_mines or no arguments\n");
+	return 1;
+    }
+
+    initscr();
+    noecho();
+    cbreak();
     getmaxyx(stdscr, max_size_y, max_size_x);
+    if (size_x > max_size_x - 2 || size_y > max_size_y - 2) {
+	endwin();
+	printf("Board greater than size of terminal!\n");
+	return 1;
+    }
 
     start_color();
     if (!has_colors()) {
 	endwin();
-	printf("Your terminal does not support color!");
+	printf("Your terminal does not support color!\n");
 	return 1;
     }
     else {
 	define_colors();
     }
 
-    // standard large board TODO: add other/custom bord sizes
-    size_y = 16;
-    size_x = 30;
-    int num_mines = 60;
 
     int *board_ptr = calloc(size_y * size_x, sizeof(int));
     if (NULL == board_ptr) {
-      printf("Memory allocation failed!");
+      printf("Memory allocation failed!\n");
       return 1;
     }
 
@@ -48,6 +74,11 @@ int main(){
     while (1){
 	ch = getch();
 	switch (ch){
+	    case 'R':
+	    memset(board_ptr, 0, size_y * size_x * sizeof(int));
+	    init_board(board_ptr, size_y, size_x, num_mines); 
+	    draw_board(board_ptr, start_y, start_x, size_y, size_x);
+	    break;
 	    case 'H':
 	    cur_x = proj_interval(cur_x - 5, size_x, start_x);
 	    break;
