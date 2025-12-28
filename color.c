@@ -18,22 +18,22 @@ void define_colors(){
     init_pair(7, 51, COLOR_WHITE);   // Cyan for 6
     init_pair(8, 0, COLOR_WHITE);    // Black for 7
     init_pair(9, 240, COLOR_WHITE);  // Gray for 8
-    init_pair(11, COLOR_WHITE, 245);
-    init_pair(12, 21, 245);   // Bright blue for 1
-    init_pair(13, 28, 245);   // Green for 2
-    init_pair(14, 196, 245);  // Red for 3
-    init_pair(15, 18, 245);   // Dark blue for 4
-    init_pair(16, 88, 245);   // Maroon for 5
-    init_pair(17, 51, 245);   // Cyan for 6
-    init_pair(18, 0, 245);    // Black for 7
-    init_pair(19, 240, 245);  // Gray for 8
+    init_pair(11, COLOR_WHITE, 242);
+    init_pair(12, 21, 242);   // Bright blue for 1
+    init_pair(13, 28, 242);   // Green for 2
+    init_pair(14, 196, 242);  // Red for 3
+    init_pair(15, 18, 242);   // Dark blue for 4
+    init_pair(16, 88, 242);   // Maroon for 5
+    init_pair(17, 51, 242);   // Cyan for 6
+    init_pair(18, 0, 242);    // Black for 7
+    init_pair(19, 240, 242);  // Gray for 8
 
     init_pair(COLOR_CLOSED, COLOR_BLACK, COLOR_WHITE); // Closed square
     init_pair(COLOR_OPEN, COLOR_BLACK, COLOR_WHITE); // Open square
     init_pair(COLOR_FLAG, COLOR_MAGENTA, COLOR_WHITE); // Flagged square
     init_pair(COLOR_EXPL, COLOR_RED, COLOR_WHITE); // Exploded square
-    init_pair(10 + COLOR_CLOSED, COLOR_BLACK, 245); // Closed square
-    init_pair(10 + COLOR_OPEN, COLOR_BLACK, 245); // Open square
-    init_pair(10 + COLOR_FLAG, COLOR_MAGENTA, 245); // Flagged square
-    init_pair(10 + COLOR_EXPL, COLOR_RED, 245); // Exploded square
+    init_pair(10 + COLOR_CLOSED, COLOR_BLACK, 242); // Closed square
+    init_pair(10 + COLOR_OPEN, COLOR_BLACK, 242); // Open square
+    init_pair(10 + COLOR_FLAG, COLOR_MAGENTA, 242); // Flagged square
+    init_pair(10 + COLOR_EXPL, COLOR_RED, 242); // Exploded square
 }
