@@ -70,7 +70,7 @@ void draw_board(int* board_ptr, int start_y, int start_x, int size_y, int size_x
 	    }
 	    else if(board_val & IS_FLAGGED){
 		//ch_to_scr = ACS_UARROW;
-		ch_to_scr = '@';
+		ch_to_scr = 'X';
 		color_pair_id = COLOR_FLAG; 
 	    }
 	    else if (board_val & IS_CLOSED) {
@@ -139,4 +139,29 @@ void flag_square(int *board_ptr, int size_y, int size_x, int y_pos, int x_pos) {
 	return;
     }
 
+}
+
+int number_flagged(int *board_ptr, int size_y, int size_x){
+    int flagged = 0;
+    for (int i = 0; i < size_y*size_x; i++){
+	if (board_ptr[i] & IS_FLAGGED) {
+	   flagged +=1;
+	}
+    }
+    return flagged;
+}
+
+int check_closed_non_mine(int *board_ptr, int size_y, int size_x){
+    int closed_non_mine = 0;
+    for(int i = 0; i < size_y*size_x; i++) {
+	if (board_ptr[i] & IS_MINE) {
+	    continue;
+	}
+	else if(board_ptr[i] & IS_CLOSED) {
+	    closed_non_mine +=1;
+	}
+	else {
+	}
+    }
+    return closed_non_mine;
 }

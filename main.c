@@ -45,10 +45,21 @@ int main(){
     int ch;
     int cur_y, cur_x;
 
-    // handling input TODO: Make interact with the actual board
     while (1){
 	ch = getch();
 	switch (ch){
+	    case 'H':
+	    cur_x = proj_interval(cur_x - 5, size_x, start_x);
+	    break;
+	    case 'J':
+	    cur_y = proj_interval(cur_y + 5, size_y, start_y);
+	    break;
+	    case 'K':
+	    cur_y = proj_interval(cur_y - 5, size_y, start_y);
+	    break;
+	    case 'L':
+	    cur_x = proj_interval(cur_x + 5, size_x, start_x);
+	    break;
 	    case 'h':
 	    cur_x = proj_interval(--cur_x, size_x, start_x);
 	    break;
@@ -72,6 +83,10 @@ int main(){
 
 	}
 	mvprintw(start_y + size_y + 3, start_x + size_y + 3, "Current position y: %d, x: %d\n", cur_y, cur_x);
+	mvprintw(0, 0, "Remaining mines: %d\n", (num_mines - number_flagged(board_ptr, size_y, size_x)));
+	if (check_closed_non_mine(board_ptr, size_y, size_x) == 0) {
+	   mvprintw(size_y + 1, 0, "YOU WON!"); 
+	}
 	move(cur_y, cur_x);
 	refresh();
 	if (ch == 'q'){
